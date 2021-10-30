@@ -6,33 +6,25 @@ namespace Okvpn\Bundle\CronBundle\Command;
 
 use Okvpn\Bundle\CronBundle\Loader\ScheduleLoaderInterface;
 use Okvpn\Bundle\CronBundle\Runner\ScheduleRunnerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'okvpn:cron',
+    description: 'Runs currently schedule cron',
+)]
 class CronCommand extends Command
 {
-    private $scheduleRunner;
-    private $loader;
-
-    protected static $defaultName = 'okvpn:cron';
-
-    /**
-     * @param ScheduleRunnerInterface $scheduleRunner
-     * @param ScheduleLoaderInterface $loader
-     */
-    public function __construct(ScheduleRunnerInterface $scheduleRunner, ScheduleLoaderInterface $loader)
-    {
-        $this->scheduleRunner = $scheduleRunner;
-        $this->loader = $loader;
-
+    public function __construct(
+        private ScheduleRunnerInterface $scheduleRunner,
+        private ScheduleLoaderInterface $loader,
+    ) {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this->setName('okvpn:cron')
@@ -41,14 +33,10 @@ class CronCommand extends Command
             ->addOption('command', null, InputOption::VALUE_OPTIONAL, 'Run only selected command')
             ->addOption('demand', null, InputOption::VALUE_NONE, 'Start cron scheduler every one minute without exit')
             ->addOption('group', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Run schedules for specific groups.')
-            ->addOption('time-limit', null, InputOption::VALUE_OPTIONAL, 'Run cron scheduler during this time (sec.)')
-            ->setDescription('Runs currently schedule cron');
+            ->addOption('time-limit', null, InputOption::VALUE_OPTIONAL, 'Run cron scheduler during this time (sec.)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('demand')) {
             $output->writeln('Run scheduler without exit');
@@ -64,12 +52,10 @@ class CronCommand extends Command
         } else {
             $this->scheduler($input, $output);
         }
+
+        return Command::SUCCESS;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     protected function scheduler(InputInterface $input, OutputInterface $output): void
     {
         $options = [];

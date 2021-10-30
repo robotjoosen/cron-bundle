@@ -3,11 +3,11 @@
     "description": "Symfony cron bundle for handle scheduled tasks consistently, parallel or across a cluster, like Symfony Messenger",
     "type": "symfony-bundle",
     "license": "MIT",
-    "homepage": "https://github.com/vtsykun/cron-bundle",
+    "homepage": "https://github.com/robotjoosen/cron-bundle",
     "support": {
-        "email": "tsykun314@gmail.com",
-        "issues": "https://github.com/vtsykun/cron-bundle/issues",
-        "source": "https://github.com/vtsykun/cron-bundle/releases"
+        "email": "robotjoosen@gmail.com",
+        "issues": "https://github.com/robotjoosen/cron-bundle/issues",
+        "source": "https://github.com/robotjoosen/cron-bundle/releases"
     },
     "keywords": [
         "cron-bundle",
@@ -26,12 +26,17 @@
         {
             "name": "Uladzimir Tsykun",
             "email": "tsykun314@gmail.com"
+        },
+        {
+            "name": "Roald Joosen",
+            "email": "robotjoosen@gmail.com"
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "symfony/framework-bundle": "^3.4|^4.0|^5.0",
-        "dragonmantank/cron-expression": "^2.0"
+        "php": ">=8.0",
+        "symfony/framework-bundle": "^5.0",
+        "dragonmantank/cron-expression": "^2.0",
+        "symfony/console": "^5.0"
     },
     "autoload": {
         "psr-4": {
