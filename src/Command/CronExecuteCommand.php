@@ -49,5 +49,7 @@ class CronExecuteCommand extends Command
         } finally {
             @unlink($input->getArgument('filename'));
         }
+
+        return 0;
     }
 }

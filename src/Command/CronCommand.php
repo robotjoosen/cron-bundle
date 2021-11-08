@@ -64,6 +64,8 @@ class CronCommand extends Command
         } else {
             $this->scheduler($input, $output);
         }
+
+        return 0;
     }
 
     /**
